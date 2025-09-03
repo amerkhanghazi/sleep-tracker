@@ -1,4 +1,5 @@
 import { SignInButton } from '@clerk/nextjs';
+import Image from "next/image";
 
 const Guest = () => {
   return (
@@ -19,11 +20,16 @@ const Guest = () => {
           </SignInButton>
         </div>
         <div className='flex-1 flex justify-center items-center'>
-          <img
-            src='sleep-tracker.png'
-            alt='Tracker-360 Illustration'
-            className='w-full md:max-w-md rounded-tl-3xl rounded-br-3xl shadow-xl'
-          />
+
+
+<Image
+  src="/sleep-tracker.png"
+  alt="Tracker-360 Illustration"
+  width={600} // set an appropriate width
+  height={400} // set an appropriate height
+  className="w-full md:max-w-md rounded-tl-3xl rounded-br-3xl shadow-xl"
+/>
+
         </div>
       </div>
 
