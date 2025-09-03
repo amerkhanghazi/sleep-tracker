@@ -2,6 +2,10 @@ import React from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import Guest from "./components/Guest";
 import AddNewRecord from "./components/AddNewRecord";
+import RecordChart from "./components/RecordChart";
+import AverageSleep from "./components/AverageSleep";
+import BestWorstSleep from "./components/BestWorstSleep";
+import RecordHistory from "./components/RecordHistory";
 
 const HomePage = async () => {
   const user = await currentUser();
@@ -11,15 +15,7 @@ const HomePage = async () => {
 
   return (
     <main className="font-sans bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
-      {/* Hero Section (like About page) */}
-      <section className="flex flex-col items-center justify-center text-center py-16 px-8 bg-gradient-to-r from-[#3F8A00] via-[#89C60E] to-[#DFF79A]">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">
-          Welcome Back, {user.firstName} 👋
-        </h1>
-        <p className="text-lg md:text-xl text-white/90 max-w-2xl">
-          Track your sleep and gain insights into your daily habits 🌙
-        </p>
-      </section>
+    
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -36,8 +32,8 @@ const HomePage = async () => {
 
             {/* User Details */}
             <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-[#3F8A00] via-[#89C60E] to-[#DFF79A] bg-clip-text text-transparent">
-                {user.firstName}'s Dashboard
+              <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 dark:text-white drop-shadow-lg">
+                Welcome Back, {user.firstName}!
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Here’s a quick overview of your recent sleep activity.
@@ -63,15 +59,13 @@ const HomePage = async () => {
         </div>
 
         {/* Right Column */}
-        <div className="space-y-6">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-            <p className="text-center">
-              📊 Your sleep insights & analytics will appear here soon!
-            </p>
-          </div>
+        <div><RecordChart />
+        <AverageSleep />
+        <BestWorstSleep />
         </div>
       </div>
-    </main>
+      <RecordHistory />
+      </main>
   );
 };
 
