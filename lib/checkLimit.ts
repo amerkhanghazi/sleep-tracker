@@ -4,7 +4,11 @@ import { checkUser } from "./checkUser";
 
 const DAILY_LIMIT = 5; // 🔒 adjust as needed
 
-export async function checkAndLogAIRequest(): Promise<{ allowed: boolean; reason?: string }> {
+export async function checkAndLogAIRequest(): Promise<{
+  allowed: boolean;
+  fallback?: boolean;
+  reason?: string;
+}> {
   const user = await checkUser();
   if (!user) return { allowed: false, reason: "User not authenticated" };
 
@@ -20,12 +24,17 @@ export async function checkAndLogAIRequest(): Promise<{ allowed: boolean; reason
   });
 
   if (requestCount >= DAILY_LIMIT) {
-    return { allowed: false, reason: "Daily quota reached" };
+    // ✅ Instead of hard block, allow fallback
+    return {
+      allowed: false,
+      fallback: true,
+      reason: "Daily quota reached (switching to local insights)",
+    };
   }
 
   // Log this request
   await db.aIRequest.create({
-    data: { userId: user.clerkUserId }, //
+    data: { userId: user.clerkUserId },
   });
 
   return { allowed: true };
